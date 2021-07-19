@@ -3,7 +3,7 @@ from firebase_admin import credentials
 from firebase_admin import db
 
 # Fetch the service account key JSON file contents
-cred = credentials.Certificate('gamexoonline-firebase-adminsdk-ekhyl-5d7d1c4b1a.json')
+cred = credentials.Certificate('gamexoonline-firebase-adminsdk-ekhyl-0bf647ad55.json')
 
 # Initialize the app with a service account, granting admin privileges
 firebase_admin.initialize_app(cred, {
@@ -20,6 +20,7 @@ table = [[1, 2, 3],
          [4, 5, 6],
          [7, 8, 9]]
 table_ref.set({"data":table})
+table=table_ref.get()['data']
 
 def show_table():  #ตารางXO
     for column in table:
@@ -50,6 +51,7 @@ def choosing_position(player_symbol):
             position = int(input('position:'))
         table[2][position - 7] = player_symbol
     table_ref.set({"data":table})
+
     return
 
 def check_winner(player_symbol):
@@ -73,15 +75,17 @@ def check_winner(player_symbol):
 
 i=0
 while True:
+
     i+=1
 
     show_table()
     choosing_position('X')
     if check_winner('X'):
         break
-
+    print(table)
     show_table()
     print('เลือกหมายเลข')
     choosing_position('O')
     if check_winner('O'):
         break
+show_table()
