@@ -80,60 +80,61 @@ def check_winner(player_symbol):
         return False
 
 
-i = 0
+i=0
 print('choosing new game or join game.')
 print('1 for new game')
 print('2 for join game')
-choose = input('1 or 2:')
-
-if choose == '1':
+number = input('1 or 2:')
+if number=='1':
     table_ref.set({"data": table})
-
     while True:
-        i += 1
-        while table != check_winner('X'):
-            if table == table_ref.get()['data']:
-                show_table()
-                if check_winner('O'):
-                    print('you lose')
-                    break
-                choosing_position('X')
-                table_ref.set({"data": table})
+        i+=1
+
+        show_table()
+        choosing_position('X')
+        if check_winner('X') is True:
+
+            table_ref.set({"data": table})
+            break
+        elif check_winner('O') is True:
+
+            table_ref.set({"data": table})
+            break
+        table_ref.set({"data": table})
+        table = table_ref.get()['data']
+        while True:
+            if table != table_ref.get()['data']:
                 table = table_ref.get()['data']
-                while True:
-                    if check_winner('X'):
-                        break
-                    if table != table_ref.get()['data']:
-                        table = table_ref.get()['data']
-                        break
                 break
         if check_winner('X'):
+
             break
-elif choose == '2':
-    while True:
-        if table != table_ref.get()['data']:
+        elif check_winner('O'):
+
+            break
+elif number=='2':
+
             while True:
-                i += 1
-                while table != check_winner('O'):
-                    table = table_ref.get()['data']
-                    if table == table_ref.get()['data']:
-                        show_table()
-                        if check_winner('X'):
-                            print('you lose')
-                            break
-                        choosing_position('O')
-                        table_ref.set({"data": table})
-                        table = table_ref.get()['data']
-                        while True:
-                            if check_winner('O'):
-                                break
-                            if table != table_ref.get()['data']:
-                                table = table_ref.get()['data']
-
-                                break
+                while True:
+                    if table!=table_ref.get()['data']:
+                        table=table_ref.get()['data']
                         break
+                i += 1
+                if check_winner('O') is True:
 
-                if check_winner('O'):
                     break
+                elif check_winner('X') is True:
 
+                    break
+                show_table()
+                choosing_position('O')
+                table_ref.set({"data": table})
+                table = table_ref.get()['data']
+
+                if check_winner('X'):
+
+                    break
+                elif check_winner('O'):
+
+                    break
 show_table()
